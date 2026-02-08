@@ -18,7 +18,7 @@ export default function Navigation({
   onNewChat = () => {},  // Default no-op function
   onSelectChat = () => {},  // Default no-op function
 }: NavigationProps) {
-  const [theme, setTheme] = useState("dark");
+  const [theme, setTheme] = useState("light");
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -59,12 +59,12 @@ export default function Navigation({
       {/* Mobile Menu Button - Fixed at top left */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="sm:hidden fixed top-4 left-4 z-50 bg-accent text-white p-2 rounded-lg shadow-lg hover:bg-accent/90 transition"
+        className="sm:hidden fixed top-4 left-4 z-50  text-text p-2 rounded-lg shadow-lg hover:bg-accent/90 transition"
       >
         {isOpen ? (
-          <IoClose className="w-6 h-6" />
+          <IoClose className="w-8 h-8" />
         ) : (
-          <GiHamburgerMenu className="w-6 h-6" />
+          <GiHamburgerMenu className="w-8 h-8" />
         )}
       </button>
 
@@ -98,7 +98,7 @@ export default function Navigation({
 
           <Link to="/"
             onClick={handleNewChatClick}
-            className="bg-accent text-white px-4 py-2.5 w-full cursor-pointer rounded-lg hover:bg-accent/90 transition font-medium"
+            className="bg-accent text-white px-4 py-2.5 w-full  rounded-lg hover:bg-accent/90 transition font-medium"
           >
             + New Chat
           </Link>
@@ -162,8 +162,8 @@ export default function Navigation({
         <section className="border-t border-border pt-4 mt-3 space-y-3">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 rounded-full bg-avatar flex items-center justify-center text-sm font-bold text-gray-800">
-                AT
+              <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-sm font-bold text-text">
+                EJ
               </div>
               <p className="font-medium truncate text-sm">Emediong Jonah</p>
             </div>
@@ -173,9 +173,9 @@ export default function Navigation({
               title="Toggle theme"
             >
               {theme === "light" ? (
-                <IoMoon className="w-5 h-5 text-secondary hover:text-text-muted transition" />
+                <IoMoon className="w-7 h-7 text-text hover:text-text-muted transition cursor-pointer" />
               ) : (
-                <GiSun className="w-5 h-5 text-secondary hover:text-text-muted transition" />
+                <GiSun className="w-7 h-7 text-text hover:text-text-muted transition cursor-pointer" />
               )}
             </button>
           </div>

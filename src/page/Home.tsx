@@ -37,7 +37,7 @@ function Home({ start, isVisible }: HomeProps) {
 
   return (
     <main className="flex items-center justify-center p-4 mb-8">
-      <div className="max-w-md w-full bg-surface border border-slate-700 rounded-2xl shadow-2xl p-8 text-center">
+      <div className="max-w-md w-full bg-surface rounded-2xl shadow-2xl p-8 text-center">
         
         {/* Profile Avatar Placeholder */}
         <div className="w-24 h-24 bg-primary rounded-full mx-auto mb-6 flex items-center justify-center text-3xl font-bold text-white uppercase">
@@ -56,13 +56,13 @@ function Home({ start, isVisible }: HomeProps) {
             </h1>
             
             {error && (
-              <p className="text-orange-500 text-sm mb-2">
-                (Couldn't load random name, using default)
+              <p className="text-error text-sm mb-2">
+                (Couldn't load name)
               </p>
             )}
             
             <p className="mb-8 leading-relaxed text-text">
-              I am your technical interviewer for today. 
+              I am your technical interviewer
             </p>
             
             <button 

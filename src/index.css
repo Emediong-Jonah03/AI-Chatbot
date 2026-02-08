@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  /* LIGHT MODE - Professional Chat Interface */
+  
   --color-bg: rgb(250 250 250);
   --color-surface: rgb(255 255 255);
   --color-text: rgb(17 24 39);
@@ -11,7 +11,7 @@
   --color-accent: rgb(0 145 255);
   --color-border: rgb(229 231 235);
   --color-success: rgb(74 222 128);
-  --color-error: rgb(248 113 113);
+  --color-error: rgb(233, 79, 79);;
   --color-hover: rgb(243 244 246);
 }
 
@@ -23,21 +23,20 @@
   
   .dark {
      --color-bg: rgb(184, 180, 180);
-    /* DARK MODE - AI Chat Interface Colors */
-    --color-bg: rgb(25, 28, 36);           /* Main chat background - darkest */
-    --color-surface: rgb(16, 20, 26);       /* Sidebar background */
-    --color-text: rgb(255 255 255);       /* Primary text - pure white */
-    --color-text-muted: rgb(139 148 158); /* Secondary text - muted gray */
-    --color-text-assistant: rgb(201 209 217); /* Assistant response text */
-    --color-primary: rgb(0 145 255);      /* Action blue */
-    --color-secondary: rgb(139 148 158);  /* Icon fill gray */
-    --color-accent: rgb(0 145 255);       /* Action blue for buttons */
-    --color-border: rgb(33 38 45);        /* Hover/active state */
-    --color-input: rgb(22 27 34);         /* Message input & code blocks */
-    --color-hover: rgb(33 38 45);         /* Hover state */
-    --color-success: rgb(74 222 128);     /* Success green */
-    --color-error: rgb(248 113 113);      /* Error red */
-    --color-avatar: rgb(250 211 144);     /* Profile background - warm peach */
-    --color-badge: rgb(28 33 40);         /* Model badge background */
+    --color-bg: rgb(25, 28, 36);           
+    --color-surface: rgb(16, 20, 26);       
+    --color-text: rgb(255 255 255);       
+    --color-text-muted: rgb(139 148 158); 
+    --color-text-assistant: rgb(201 209 217); 
+    --color-primary: rgb(0 145 255);      
+    --color-secondary: rgb(139 148 158); 
+    --color-accent: rgb(0 145 255);       
+    --color-border: rgb(33 38 45);        
+    --color-input: rgb(22 27 34);        
+    --color-hover: rgb(33 38 45);         
+    --color-success: rgb(74 222 128);     
+    --color-error: rgb(233, 79, 79);      
+    --color-avatar: rgb(250 211 144);     
+    --color-badge: rgb(28 33 40);        
   }
 }

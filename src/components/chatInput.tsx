@@ -27,7 +27,7 @@ function ChatInput({ onSendMessage, isVisible }: ChatInputProps) {
   if (!isVisible) return null; // FIXED: Changed from isVisible to !isVisible
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-bg border-t border-border sm:ml-72 md:ml-80 lg:ml-[20%]">
+    <div className="fixed sm:bottom-2 bottom-3 left-0 right-0 bg-bg border-t border-border sm:ml-72 md:ml-80 lg:ml-[20%]">
       <div className="max-w-4xl mx-auto p-4">
         <form onSubmit={handleSubmit} className="relative">
           {/* Input Container */}
@@ -81,7 +81,7 @@ function ChatInput({ onSendMessage, isVisible }: ChatInputProps) {
           </div>
 
           {/* Helper Text */}
-          <p className="text-xs text-text-muted text-center mt-2">
+          <p className="text-xs hidden sm:block text-text-muted text-center mt-2">
             Press Enter to send, Shift+Enter for new line
           </p>
         </form>

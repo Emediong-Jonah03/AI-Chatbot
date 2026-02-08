@@ -1,5 +1,31 @@
 import { IoFlash, IoRocket, IoBulb, IoTrendingUp } from "react-icons/io5";
 import { FaLinkedin, FaGithub, FaTwitter } from "react-icons/fa";
+interface SocialLink 
+{
+  link: string,
+  icon: any
+  label: string,
+}
+
+const socials:SocialLink[] = [
+  {
+    link: "https://www.linkedin.com/in/emediong-jonah-68a093329",
+    icon: <FaLinkedin className="w-5 h-5" />,
+    label: "Linkedin"
+  },
+
+   {
+    link: "https://github.com/Emediong-Jonah03",
+    icon: <FaGithub className="w-5 h-5" />,
+    label: "Github"
+  },
+   {
+    link: "https://x.com/EmediongJ15081",
+    icon: <FaTwitter className="w-5 h-5" />,
+    label: "Twitter"
+  },
+
+]
 
 function About() {
   return (
@@ -33,7 +59,7 @@ function About() {
         </div>
 
         {/* Key Features */}
-        <div className="grid md:grid-cols-3 gap-6 mb-12">
+        <div className="grid md:grid-cols-2 gap-6 mb-12">
           <div className="bg-surface border border-border rounded-xl p-6 hover:border-accent transition">
             <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mb-4">
               <IoBulb className="w-6 h-6 text-accent" />
@@ -82,36 +108,21 @@ function About() {
               </p>
 
               {/* Social Links */}
-              <div className="flex gap-4 justify-center md:justify-start">
+              
+                <div className="flex gap-4 justify-center md:justify-start">
+                  {socials.map(el => (
                 <a
-                  href="https://www.linkedin.com/in/emediong-jonah-68a093329"
+                  href={el.link}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 bg-surface border border-border rounded-lg flex items-center justify-center hover:border-accent hover:text-accent transition"
-                  aria-label="LinkedIn"
+                  aria-label={el.label}
                 >
-                  <FaLinkedin className="w-5 h-5" />
-                </a>
-                
-                <a
-                  href="https://github.com/Emediong-Jonah03"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 bg-surface border border-border rounded-lg flex items-center justify-center hover:border-accent hover:text-accent transition"
-                  aria-label="GitHub"
-                >
-                  <FaGithub className="w-5 h-5" />
-                </a>
-                <a
-                  href="https://x.com/EmediongJ15081"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 bg-surface border border-border rounded-lg flex items-center justify-center hover:border-accent hover:text-accent transition"
-                  aria-label="Twitter"
-                >
-                  <FaTwitter className="w-5 h-5" />
-                </a>
+                  {el.icon}
+                </a>  
+                ))} 
               </div>
+              
             </div>
           </div>
         </div>
@@ -119,7 +130,7 @@ function About() {
         {/* Tech Stack */}
         <div className="bg-surface border border-border rounded-2xl p-8">
           <h2 className="text-2xl font-bold text-text mb-6">Technology Stack</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {[
               "React",
               "TypeScript",
@@ -139,15 +150,7 @@ function About() {
           </div>
         </div>
 
-        {/* Contact CTA */}
-        <div className="text-center mt-12 mb-8">
-          <p className="text-text-muted mb-4">
-            Interested in transforming your hiring process?
-          </p>
-          <button className="bg-accent hover:bg-accent/90 text-white font-bold py-3 px-8 rounded-xl transition-all duration-200 transform hover:scale-105">
-            Get in Touch
-          </button>
-        </div>
+
       </div>
     </div>
   );
