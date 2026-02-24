@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 function Login() {
     const navigate = useNavigate();
     const location = useLocation();
-    const { login, resendVerificationEmail } = useAuth();
+    const { login } = useAuth();
 
     const [formData, setFormData] = useState({
         email: "",
@@ -18,7 +18,6 @@ function Login() {
     const [errors, setErrors] = useState<Record<string, string>>({});
     const [isLoading, setIsLoading] = useState(false);
     const [resendMessage, setResendMessage] = useState("");
-    const [isResending, setIsResending] = useState(false);
 
     // Get message from signup redirect
     const signupMessage = location.state?.message;
@@ -65,26 +64,6 @@ function Login() {
             }
         } finally {
             setIsLoading(false);
-        }
-    };
-
-    const handleResendVerification = async () => {
-        if (!formData.email.trim()) {
-            setErrors(prev => ({ ...prev, email: "Enter your email to resend verification." }));
-            return;
-        }
-
-        setIsResending(true);
-        setResendMessage("");
-
-        try {
-            const message = await resendVerificationEmail(formData.email);
-            setResendMessage(message);
-        } catch (error: any) {
-            const message = error?.error || error?.email?.[0] || "Unable to resend verification email.";
-            setErrors(prev => ({ ...prev, submit: message }));
-        } finally {
-            setIsResending(false);
         }
     };
 
