@@ -158,7 +158,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
             });
 
             // Return the success message from backend
-            return res.data.message || "Account created successfully. Please check your email to verify your account.";
+            return res.data.message || "Account created successfully. Please sign in.";
 
         } catch (error: any) {
             console.error('Signup failed:', error);

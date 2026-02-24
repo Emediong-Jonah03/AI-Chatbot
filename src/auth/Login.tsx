@@ -55,14 +55,10 @@ function Login() {
             // Extract the error message
             const errorMessage = error.message || error.toString();
 
-            if (errorMessage.includes('verify your email')) {
-                setErrors({
-                    submit: 'Please verify your email before signing in. Check your inbox for the verification link.'
-                });
-            } else if (errorMessage.includes('Invalid')) {
+            if (errorMessage.includes('Invalid')) {
                 setErrors({ submit: 'Invalid email or password.' });
             } else {
-                setErrors({ submit: 'Login failed. Please try again.' });
+                setErrors({ submit: errorMessage || 'Login failed. Please try again.' });
             }
         } finally {
             setIsLoading(false);
@@ -203,18 +199,6 @@ function Login() {
                                 "Sign In"
                             )}
                         </button>
-                        {errors.submit && errors.submit.includes('verify') && (
-                            <button
-                                type="button"
-                                className="text-accent text-sm hover:underline mt-2"
-                                onClick={() => {
-                                    // TODO: Call your backend's resend verification endpoint
-                                    alert('Verification email resent! Check your inbox.');
-                                }}
-                            >
-                                Resend verification email
-                            </button>
-                        )}
                     </form>
 
                     {/* Sign Up Link */}

@@ -59,13 +59,13 @@ function SignUp() {
             const message = await signup(formData.username, formData.email, formData.password);
 
             // Show success message from backend
-            setSuccessMessage(message || "Account created! Please check your email to verify your account.");
+            setSuccessMessage(message || "Account created successfully. You can now sign in.");
 
             // Redirect to login after 3 seconds
             setTimeout(() => {
                 navigate('/login', {
                     state: {
-                        message: 'Please verify your email before signing in.'
+                        message: 'Account created successfully. Please sign in.'
                     }
                 });
             }, 3000);
