@@ -15,6 +15,7 @@ interface AuthContextType {
     isLoading: boolean;
     login: (email: string, password: string) => Promise<void>;
     signup: (username: string, email: string, password: string) => Promise<string>;
+    resendVerificationEmail: (email: string) => Promise<string>;
     logout: () => Promise<void>;
     deleteAccount: () => Promise<void>;
     isAuthenticated: boolean;
@@ -172,6 +173,39 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         }
     };
 
+    const resendVerificationEmail = async (email: string): Promise<string> => {
+        setIsLoading(true);
+
+        const payload = { email };
+        const endpoints = [
+            `${API_URL}/auth/resend-verification/`,
+            `${API_URL}/auth/resend-verification-email/`,
+        ];
+
+        try {
+            for (const endpoint of endpoints) {
+                try {
+                    const res = await axios.post(endpoint, payload);
+                    return res.data.message || "Verification email sent. Please check your inbox.";
+                } catch (error: any) {
+                    if (error.response?.status === 404) {
+                        continue;
+                    }
+
+                    if (error.response?.data) {
+                        throw error.response.data;
+                    }
+
+                    throw error;
+                }
+            }
+
+            throw new Error("Resend verification endpoint not found.");
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     const logout = async () => {
         try {
             const refreshToken = localStorage.getItem('refresh');
@@ -207,6 +241,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         isLoading,
         login,
         signup,
+        resendVerificationEmail,
         logout,
         deleteAccount,
         isAuthenticated: !!user,
