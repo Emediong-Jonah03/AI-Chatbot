@@ -31,18 +31,8 @@ const socials: SocialLink[] = [
 ];
 
 function About() {
-  const [activeTestimonial, setActiveTestimonial] = useState<number>(0);
+
   const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set());
-
-  const testimonials = [
-    { text: "Practicing with AI Interviewer helped me land my dream job at Google. The questions felt so real!", author: "Sarah M." },
-    { text: "I was nervous about technical interviews. This tool gave me the confidence I needed.", author: "James K." },
-    { text: "Finally, a way to practice interviews without the awkwardness of bothering friends.", author: "Priya R." }
-  ];
-
-  const handleTestimonialChange = (index: number) => {
-    setActiveTestimonial(index);
-  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
