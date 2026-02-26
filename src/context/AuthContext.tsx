@@ -20,7 +20,7 @@ interface AuthContextType {
         email: string,
         password: string
     ) => Promise<string>;
-    resendVerificationEmail: (email: string) => Promise<string>;
+
     logout: () => Promise<void>;
     deleteAccount: () => Promise<void>;
 }
@@ -46,7 +46,7 @@ export const AuthProvider = ({ children }: Props) => {
     const [isLoading, setIsLoading] = useState(true);
 
     // Load user on startup
-    useEffect(() => {
+    /*useEffect(() => {
         const loadUser = async () => {
             const storedUser = localStorage.getItem("user");
 
@@ -62,7 +62,7 @@ export const AuthProvider = ({ children }: Props) => {
             }
 
             try {
-                const res = await api.get("/auth/me/");
+                const res = await api.get("/auth/m/");
                 setUser(res.data);
                 localStorage.setItem("user", JSON.stringify(res.data));
             } catch {
@@ -74,14 +74,14 @@ export const AuthProvider = ({ children }: Props) => {
         };
 
         loadUser();
-    }, []);
+    }, []);*/
 
     // LOGIN
     const login = async (email: string, password: string) => {
         setIsLoading(true);
 
         try {
-            const res = await api.post("/auth/signin/", {
+            const res = await api.post("/v1/auth/login", {
                 email,
                 password,
             });
@@ -112,7 +112,7 @@ export const AuthProvider = ({ children }: Props) => {
         setIsLoading(true);
 
         try {
-            const res = await api.post("/auth/signup/", {
+            const res = await api.post("/v1/auth/register", {
                 username,
                 email,
                 password,
@@ -134,22 +134,23 @@ export const AuthProvider = ({ children }: Props) => {
     };
 
     // RESEND VERIFICATION EMAIL
-    const resendVerificationEmail = async (
-        email: string
-    ): Promise<string> => {
-        try {
-            const res = await api.post("/auth/resend-verification/", {
-                email,
-            });
-
-            return res.data.message || "Verification email sent.";
-        } catch (error: any) {
-            if (error.response?.data?.error) {
-                throw new Error(error.response.data.error);
-            }
-            throw error;
-        }
-    };
+    /* const resendVerificationEmail = async (
+         email: string
+     ): Promise<string> => {
+         try {
+             const res = await api.post("/auth/resend-verification/", {
+                 email,
+             });
+ 
+             return res.data.message || "Verification email sent.";
+         } catch (error: any) {
+             if (error.response?.data?.error) {
+                 throw new Error(error.response.data.error);
+             }
+             throw error;
+         }
+     };
+     */
 
     // LOGOUT
     const logout = async () => {
@@ -157,7 +158,7 @@ export const AuthProvider = ({ children }: Props) => {
             const refresh = localStorage.getItem("refresh");
 
             if (refresh) {
-                await api.post("/auth/signout/", { refresh });
+                await api.post("/v1/auth/logout", { refresh });
             }
         } catch {
             // backend failure shouldn't block logout
@@ -171,7 +172,7 @@ export const AuthProvider = ({ children }: Props) => {
     // DELETE ACCOUNT
     const deleteAccount = async () => {
         try {
-            await api.delete("/auth/delete-account/");
+            await api.delete("/v1/auth/delete-account/");
             localStorage.clear();
             setUser(null);
             window.location.href = "/signup";
@@ -186,7 +187,7 @@ export const AuthProvider = ({ children }: Props) => {
         isAuthenticated: !!user,
         login,
         signup,
-        resendVerificationEmail,
+        //resendVerificationEmail,
         logout,
         deleteAccount,
     };

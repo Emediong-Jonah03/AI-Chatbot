@@ -9,7 +9,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     const { isAuthenticated, isLoading } = useAuth();
 
     if (isLoading) {
-        // Show loading spinner while checking auth
+
         return (
             <div className="min-h-screen bg-bg flex items-center justify-center">
                 <div className="text-center">
@@ -21,7 +21,6 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     }
 
     if (!isAuthenticated) {
-        // Redirect to login if not authenticated
         return <Navigate to="/login" replace />;
     }
 
