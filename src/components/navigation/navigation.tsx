@@ -5,6 +5,9 @@ import { GiHamburgerMenu, GiSun } from "react-icons/gi";
 import type { ChatSession } from "../../App";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import Theme from "../Theme";
+
+const { theme, toggleTheme } = Theme()
 
 interface NavigationProps {
   chatSessions: ChatSession[];
@@ -19,17 +22,10 @@ export default function Navigation({
   onNewChat = () => { },
   onSelectChat = () => { },
 }: NavigationProps) {
-  const [theme, setTheme] = useState("light");
+  const { user, logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
 
-  const { user, logout } = useAuth();
 
-  // Apply theme with smooth transition
-  useEffect(() => {
-    const root = document.documentElement;
-    if (theme === "dark") root.classList.add("dark");
-    else root.classList.remove("dark");
-  }, [theme]);
 
   // Responsive sidebar visibility
   useEffect(() => {
@@ -52,7 +48,7 @@ export default function Navigation({
     onSelectChat(sessionId);
   };
 
-  const toggleTheme = () => setTheme(theme === "light" ? "dark" : "light");
+
 
   return (
     <>
@@ -87,8 +83,7 @@ export default function Navigation({
         <section className="flex flex-col mb-7">
           <div className="flex justify-between items-center ml-9 sm:ml-1 mb-7 gap-3">
             <div className="flex items-end gap-4 pl-10 sm:pl-3">
-              <p className="text-xl font-bold truncate">AI Interviewer</p>
-              <IoFlash className="w-9 h-9 bg-accent text-white p-2 rounded-lg shrink-0" />
+              <p className="text-xl font-bold truncate">Interview<span className="text-primary">Ace</span></p>
             </div>
           </div>
 

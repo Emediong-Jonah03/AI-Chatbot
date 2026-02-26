@@ -1,16 +1,17 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { lazy, Suspense } from "react";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useAuth } from "./context/AuthContext";
 
-import About from "./page/About";
-import Login from "./auth/Login";
-import SignUp from "./auth/Signup";
-import Navigation from "./components/navigation/navigation";
-import Dashboard from "./page/Dashboard";
-import ChatInput from "./components/chatInput";
-import UserMessage from "./components/user";
-import AIMessage from "./components/ai";
+const About = lazy(() => import("./page/About"));
+const Login = lazy(() => import("./auth/Login"));
+const SignUp = lazy(() => import("./auth/Signup"));
+const Navigation = lazy(() => import("./components/navigation/navigation"));
+const Dashboard = lazy(() => import("./page/Dashboard"));
+const ChatInput = lazy(() => import("./components/chatInput"));
+const UserMessage = lazy(() => import("./components/user"));
+const AIMessage = lazy(() => import("./components/ai"));
 import { useState } from "react";
 
 export interface Message {
@@ -111,6 +112,14 @@ function MainApp() {
   return (
     <Routes>
       {/* Public Routes */}
+
+      <Route
+        path="/about"
+        element={
+          <About />
+        }
+      />
+
       <Route
         path="/signup"
         element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <SignUp />}
@@ -128,7 +137,7 @@ function MainApp() {
           isAuthenticated ? (
             <Navigate to="/dashboard" replace />
           ) : (
-            <Navigate to="/login" replace />
+            <Navigate to="/about" replace />
           )
         }
       />
@@ -159,15 +168,6 @@ function MainApp() {
               </section>
               <ChatInput onSendMessage={handleSendMessage} isVisible={interviewStarted} />
             </main>
-          </ProtectedRoute>
-        }
-      />
-
-      <Route
-        path="/about"
-        element={
-          <ProtectedRoute>
-            <About />
           </ProtectedRoute>
         }
       />
