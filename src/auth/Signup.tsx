@@ -192,7 +192,7 @@ function SignUp() {
                                     disabled={isLoading || !!successMessage}
                                     className={`w-full bg-input border ${errors.password ? "border-error" : "border-border"
                                         } text-text rounded-lg pl-10 pr-12 py-3 focus:outline-none focus:border-accent transition disabled:opacity-50`}
-                                    placeholder="••••••••"
+                                    placeholder="********"
                                 />
                                 <button
                                     type="button"

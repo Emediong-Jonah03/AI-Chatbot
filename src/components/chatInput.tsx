@@ -3,15 +3,16 @@ import { IoSend } from "react-icons/io5";
 
 interface ChatInputProps {
   onSendMessage: (message: string) => void;
-  isVisible: boolean; // Changed Boolean to boolean
+  isVisible: boolean;
+  disabled?: boolean;
 }
 
-function ChatInput({ onSendMessage, isVisible }: ChatInputProps) {
+function ChatInput({ onSendMessage, isVisible, disabled = false }: ChatInputProps) {
   const [messageText, setMessageText] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (messageText.trim()) {
+    if (messageText.trim() && !disabled) {
       onSendMessage(messageText.trim());
       setMessageText("");
     }
@@ -23,7 +24,7 @@ function ChatInput({ onSendMessage, isVisible }: ChatInputProps) {
       handleSubmit(e);
     }
   };
-  
+
   if (!isVisible) return null; // FIXED: Changed from isVisible to !isVisible
 
   return (
@@ -32,8 +33,8 @@ function ChatInput({ onSendMessage, isVisible }: ChatInputProps) {
         <form onSubmit={handleSubmit} className="relative">
           {/* Input Container */}
           <div className="flex items-end bg-input border border-border rounded-lg focus-within:border-accent transition">
-            
-             
+
+
             {/* Attach Button */}
             {/* 
             <button
@@ -51,10 +52,11 @@ function ChatInput({ onSendMessage, isVisible }: ChatInputProps) {
               onKeyDown={handleKeyDown}
               placeholder="Message Your Interviewer"
               rows={1}
-              className="flex-1 bg-transparent text-text placeholder:text-text-muted px-2 py-3 resize-none outline-none max-h-32 overflow-y-auto"
+              disabled={disabled}
+              className="flex-1 bg-transparent text-text placeholder:text-text-muted px-2 py-3 resize-none outline-none max-h-32 overflow-y-auto disabled:opacity-50"
               style={{
                 minHeight: "44px",
-                maxHeight: "128px", 
+                maxHeight: "128px",
               }}
             />
 
@@ -72,7 +74,7 @@ function ChatInput({ onSendMessage, isVisible }: ChatInputProps) {
             {/* Send Button */}
             <button
               type="submit"
-              disabled={messageText.trim().length < 1}
+              disabled={messageText.trim().length < 1 || disabled}
               className="p-3 text-accent hover:text-accent/80 transition shrink-0 disabled:opacity-40 disabled:cursor-not-allowed"
               title="Send message"
             >

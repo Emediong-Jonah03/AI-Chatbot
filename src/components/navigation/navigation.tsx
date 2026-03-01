@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { IoMoon, IoClose } from "react-icons/io5";
+import { IoMoon, IoClose, IoTrash } from "react-icons/io5";
 import { GoSignOut } from "react-icons/go";
 import { GiHamburgerMenu, GiSun } from "react-icons/gi";
 import type { ChatSession } from "../../App";
@@ -9,9 +9,10 @@ import useTheme from "../Theme";
 
 interface NavigationProps {
   chatSessions: ChatSession[];
-  currentSessionId: number | null;
+  currentSessionId: string | null;
   onNewChat: () => void;
-  onSelectChat: (sessionId: number) => void;
+  onSelectChat: (sessionId: string) => void;
+  onDeleteSession: (sessionId: string) => void;
 }
 
 export default function Navigation({
@@ -19,14 +20,12 @@ export default function Navigation({
   currentSessionId = null,
   onNewChat = () => { },
   onSelectChat = () => { },
+  onDeleteSession = () => { },
 }: NavigationProps) {
   const { theme, toggleTheme } = useTheme();
   const { user, logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
 
-
-
-  // Responsive sidebar visibility
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 640) setIsOpen(true);
@@ -42,12 +41,10 @@ export default function Navigation({
     onNewChat();
   };
 
-  const handleChatClick = (sessionId: number) => {
+  const handleChatClick = (sessionId: string) => {
     if (window.innerWidth < 640) setIsOpen(false);
     onSelectChat(sessionId);
   };
-
-
 
   return (
     <>
@@ -111,39 +108,45 @@ export default function Navigation({
                 .slice()
                 .reverse()
                 .map((session) => {
-                  // Trim preview to 30 chars
                   const preview =
-                    session.messages.find((msg) => msg.type === "user")?.text
-                      ?.slice(0, 30) + "..." || session.title;
+                    session.messages.find((msg) => msg.type === "user")?.text?.slice(0, 30) + "…" ||
+                    session.title;
 
-                  // Dynamic avatar: first letter of session title
                   const avatarLetter = session.title.charAt(0).toUpperCase();
+                  const isActive = currentSessionId === session.id;
 
                   return (
                     <div
                       key={session.id}
-                      onClick={() => handleChatClick(session.id)}
-                      className={`flex items-center space-x-2.5 py-2.5 px-3 rounded-lg hover:bg-hover cursor-pointer transition group ${currentSessionId === session.id
-                        ? "bg-hover border-l-2 border-accent"
-                        : ""
-                        }`}
+                      className={`flex items-center space-x-2.5 py-2.5 px-3 rounded-lg hover:bg-hover cursor-pointer transition group ${isActive ? "bg-hover border-l-2 border-accent" : ""}`}
                     >
+                      {/* Avatar */}
                       <div
-                        className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${currentSessionId === session.id
-                          ? "bg-accent text-white"
-                          : "bg-secondary text-text-muted group-hover:bg-hover group-hover:text-text"
-                          }`}
+                        onClick={() => handleChatClick(session.id)}
+                        className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${isActive ? "bg-accent text-white" : "bg-secondary text-text-muted group-hover:bg-hover group-hover:text-text"}`}
                       >
                         {avatarLetter}
                       </div>
+
+                      {/* Title */}
                       <p
-                        className={`text-sm truncate transition ${currentSessionId === session.id
-                          ? "text-text font-medium"
-                          : "text-text-muted group-hover:text-text"
-                          }`}
+                        onClick={() => handleChatClick(session.id)}
+                        className={`text-sm truncate flex-1 transition ${isActive ? "text-text font-medium" : "text-text-muted group-hover:text-text"}`}
                       >
                         {preview}
                       </p>
+
+                      {/* Delete button */}
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onDeleteSession(session.id);
+                        }}
+                        className="opacity-0 group-hover:opacity-100 transition p-1 rounded text-text-muted hover:text-error hover:bg-error/10 shrink-0"
+                        title="Delete session"
+                      >
+                        <IoTrash className="w-3.5 h-3.5" />
+                      </button>
                     </div>
                   );
                 })
@@ -156,7 +159,7 @@ export default function Navigation({
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-2">
               <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-sm font-bold text-text">
-                EJ
+                {user?.username?.slice(0, 2).toUpperCase() ?? "??"}
               </div>
               <p className="font-medium truncate text-sm">{user?.username || ""}</p>
             </div>
@@ -174,12 +177,13 @@ export default function Navigation({
             </button>
           </div>
 
-          <button className="cursor-pointer flex items-center justify-center space-x-2 text-error font-medium hover:bg-error/10 w-full py-2 rounded-lg transition"
-            onClick={logout}>
+          <button
+            className="cursor-pointer flex items-center justify-center space-x-2 text-error font-medium hover:bg-error/10 w-full py-2 rounded-lg transition"
+            onClick={logout}
+          >
             <GoSignOut className="w-4 h-4" />
             <span className="text-sm">Sign Out</span>
           </button>
-
         </section>
       </nav>
     </>
